@@ -1,0 +1,14 @@
+FastAPI
+uvicorn
+pydantic
+sqlalchemy
+redis
+python-dotenv
+whisper
+deepgram-sdk
+pytest
+httpx
+psycopg2-binary
+kafka-python
+
+
