@@ -41,8 +41,8 @@ services:
     image: postgres:15
     environment:
       POSTGRES_DB: pastai_prod
-      POSTGRES_USER: prod_user
-      POSTGRES_PASSWORD: prod_pass
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
@@ -88,6 +88,17 @@ services:
     image: zookeeper:3.7
     ports:
       - "2181:2181"
+
+  journal-consumer:
+    build:
+      context: ./backend/app
+      dockerfile: Dockerfile
+    command: ["/bin/sh", "-c", "chmod +x events/consumers/start_journal_consumer.sh && ./events/consumers/start_journal_consumer.sh"]
+    env_file:
+      - .env.prod
+    depends_on:
+      - kafka
+    restart: always
 
 volumes:
   pgdata_prod:

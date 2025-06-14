@@ -82,5 +82,16 @@ services:
     ports:
       - "2181:2181"
 
+  journal-consumer:
+    build:
+      context: ./backend/app
+      dockerfile: Dockerfile
+    command: ["/bin/sh", "-c", "chmod +x events/consumers/start_journal_consumer.sh && ./events/consumers/start_journal_consumer.sh"]
+    env_file:
+      - .env.stagging
+    depends_on:
+      - kafka
+    restart: always
+
 volumes:
   pgdata_stag:
