@@ -50,6 +50,11 @@ class ReminderRead(ReminderCreate):
     class Config:
         orm_mode = True
 
+
+@router.get("/health")
+def health():
+    return {"status": "ok"}
+
 # --- User CRUD ---
 @router.post('/api/v1/users', response_model=UserRead)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):

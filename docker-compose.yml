@@ -1,19 +1,17 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: ./backend/app
       dockerfile: Dockerfile
     env_file:
-      - .env.test
+      - .env.prod
     volumes:
       - ./backend:/backend
     working_dir: /backend/app
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - mssql
       - redis
       - elasticsearch
       - kafka
@@ -24,16 +22,16 @@ services:
     ports:
       - "6379:6379"
 
-  db:
-    image: postgres:13
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: pastai
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1471027Demo
+      - MSSQL_PID=Express
     ports:
-      - "5432:5432"
+      - "1433:1433"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mssqldata:/var/opt/mssql
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
@@ -77,10 +75,11 @@ services:
       dockerfile: Dockerfile
     command: ["/bin/sh", "-c", "chmod +x events/consumers/start_journal_consumer.sh && ./events/consumers/start_journal_consumer.sh"]
     env_file:
-      - .env.test
+      - .env.prod
     depends_on:
+      - mssql
       - kafka
     restart: always
 
 volumes:
-  pgdata:
+  mssqldata:

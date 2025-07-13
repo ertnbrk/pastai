@@ -8,8 +8,9 @@ whisper
 deepgram-sdk
 pytest
 httpx
-psycopg2-binary
 kafka-python
 alembic
-
+# SQL Server için gerekli paketler
+pyodbc
+psycopg2-binary
 

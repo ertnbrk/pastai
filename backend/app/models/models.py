@@ -32,3 +32,14 @@ class Reminder(Base):
     user_id = Column(Integer, index=True)
     text = Column(String)
     datetime = Column(DateTime)
+
+class Goal(Base):
+    __tablename__ = 'goals'
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, index=True)
+    description = Column(String)
+    target_count = Column(Integer)  # ör: haftada 3 kez
+    period = Column(String)  # 'daily', 'weekly', vs.
+    created_at = Column(DateTime)
+    updated_at = Column(DateTime)
