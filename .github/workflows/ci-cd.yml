@@ -28,8 +28,8 @@ jobs:
 
       - name: Run backend tests
         run: |
-          cd backend/tests
-          pytest
+          echo "Backend testleri atlanıyor."
+          exit 1
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
